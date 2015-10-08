@@ -22,8 +22,8 @@ def max_2_sum (array)
 	  return array[0]
   else
 	sum=0
-	array.sort
-	sum=array[array.size-1]+array[array.size-2]
+	sort_arr = array.sort
+	sum=sort_arr[array.size-1]+sort_arr[array.size-2]
 	return sum
   end
 end
@@ -35,7 +35,7 @@ def sum_to_n? arr, n
   num=arr.size-1
   if arr.size==0
 	  if n==0
-		  flag=1
+		  flag=0
 	  end
   else 
 	  for i in 0..num
@@ -57,19 +57,19 @@ end
 
 def hello(name)
   # YOUR CODE HERE
-  string="Hello,"+name
-  return string
+  return "Hello, #{name}"
 end
 
 def starts_with_consonant? s
   # YOUR CODE HERE
   flag=1
   if s.empty?
-	  flag=1
-  elsif  if(s =~ /^[aeiou]/ )
+	  flag=0
+  elsif !(s =~/^[a-z]/i)
+      flag=0
+  elsif (s =~ /^[aeiou]/ )
 		flag=0
-	   end
-  elsif  if(s=~/^[AEIOU]/)
+  elsif (s=~/^[AEIOU]/)
 		flag=0
   end
   if flag ==1
@@ -84,12 +84,9 @@ def binary_multiple_of_4? s
   flag=0
   if s.empty?
 	  flag=0
-  elsif  if(s=~/[0-1]/ )
-	if( s =~/00\Z/)
+  elsif s =~ /^[01]*00$/ || s == '0'
 		flag=1
-	end	
-end	
-  end
+  end	
   if flag ==1
 	  return true
   else
@@ -101,35 +98,34 @@ end
 
 class BookInStock
 # YOUR CODE HERE
-   def initialize(isbn, price)
-	begin 
-	 raise "Bad arguement" if isbn.empty?||price<=0
-	 @book_isbn=isbn
-	 @book_price=price
-	end  
-   end
-    
-  def set_isbn(value)
-      @book_isbn = value
-   end
-   
-   def set_price(value)
-      @book_price = value
-   end
+  def initialize(isbn,price)
+    if isbn.size == 0 || price<=0
+      raise ArgumentError.new("bad argument")
+   else
+      @isbn = isbn
+      @price = price
+    end
+  end
+  
+  def isbn
+    @isbn
+  end
 
-     def get_isbn()
-      @book_isbn
-   end
-   
-   def get_price()
-      @book_price
-   end
+  def price
+    @price
+  end
 
-   def price_as_string
-	   price=@book_price+0.0
-	   s="$"+price.to_s+"0"
-	   return s
-   end
+  def isbn=(value)
+    @isbn = value
+  end
+
+  def price=(value)
+    @price = value
+  end
+
+  def price_as_string
+    "$"+format("%0.2f",@price)
+  end
    
 end
 
